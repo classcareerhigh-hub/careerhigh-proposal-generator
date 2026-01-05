@@ -20,13 +20,13 @@
 
 ### 온라인 사용
 ```
-https://yourusername.github.io/careerhigh-proposal/
+https://classcareerhigh-hub.github.io/careerhigh-proposal/
 ```
 
 ### 로컬 실행
 ```bash
 # 1. 레포지토리 클론
-git clone https://github.com/yourusername/careerhigh-proposal.git
+git clone https://github.com/classcareerhigh-hub/careerhigh-proposal.git
 
 # 2. 디렉토리 이동
 cd careerhigh-proposal
