@@ -1,204 +1,371 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerHigh 제안서 생성기</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0066FF;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        /* 상단 버튼 영역 */
+        .top-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .top-actions button {
+            padding: 10px 20px;
+            border: 2px solid #0066FF;
+            background: white;
+            color: #0066FF;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .top-actions button:hover {
+            background: #0066FF;
+            color: white;
+        }
+        
+        /* 저장된 제안서 목록 */
+        .saved-list {
+            margin-bottom: 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+        }
+        .saved-list.active {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .saved-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .saved-item:hover {
+            background: #f9f9f9;
+        }
+        .saved-info {
+            flex: 1;
+        }
+        .saved-info strong {
+            display: block;
+            color: #0066FF;
+            margin-bottom: 5px;
+        }
+        .saved-info small {
+            color: #666;
+        }
+        .saved-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .saved-actions button {
+            padding: 5px 10px;
+            font-size: 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .saved-actions button:hover {
+            background: #f0f0f0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #0066FF;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: #0066FF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0052CC;
+        }
+        .section-title {
+            background: #0066FF;
+            color: white;
+            padding: 10px 15px;
+            margin: 30px -40px 20px -40px;
+            font-size: 18px;
+        }
+        
+        /* 파일 업로드 */
+        .file-upload {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="ko"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;CareerHigh 제안서 생성기&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>* { margin: 0; padding: 0; box-sizing: border-box; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Noto Sans KR', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: #f5f5f5;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 800px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 20px rgba(0,0,0,0.1);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #0066FF;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.form-group {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>label {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input, textarea, select {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid #ddd;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: border 0.3s;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input:focus, textarea:focus, select:focus {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-color: #0066FF;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>textarea {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>min-height: 100px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>resize: vertical;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: #0066FF;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: background 0.3s;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: #0052CC;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.section-title {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: #0066FF;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 30px -40px 20px -40px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 18px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;📄 CareerHigh 제안서 생성기&lt;/h1&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;form id="proposalForm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 기본 정보 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-title"&gt;기본 정보&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;파트너사명 *&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" name="partner_name" placeholder="예: 서울대학교" required&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;프로그램명 *&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" name="program_name" placeholder="예: 2025 겨울방학 금융권 프로그램" required&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;날짜 *&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" name="date" placeholder="예: 26년 1월" required&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 프로그램 상세 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-title"&gt;프로그램 상세&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;프로그램 유형&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;select name="program_type"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="online"&gt;온라인&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="offline"&gt;오프라인&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="hybrid"&gt;온·오프라인 병행&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/select&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;일정&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" name="schedule" placeholder="예: 2026.1.14 ~ 1.21 / 총 3회"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;참여 인원&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="number" name="participants" placeholder="예: 100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;강의 시간&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" name="duration" placeholder="예: 매주 월요일 13:00-16:00 (3H)"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 프로그램 내용 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-title"&gt;프로그램 내용&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;프로그램 목표&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea name="objectives" placeholder="• 첫 번째 목표&amp;#10;• 두 번째 목표"&gt;&lt;/textarea&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;커리큘럼 (회차별)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea name="curriculum" placeholder="1주차: 내용&amp;#10;2주차: 내용"&gt;&lt;/textarea&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 금액 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-title"&gt;금액 정보&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;강의료 (원)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="number" name="price" placeholder="예: 2000000"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 멘토 정보 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-title"&gt;멘토 정보&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;멘토명&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" name="mentor_name" placeholder="예: 박철오"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;멘토 직책&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" name="mentor_position" placeholder="예: 커리어하이 대표"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;멘토 경력&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea name="mentor_career" placeholder="현) 크래커박스(주) 대표&amp;#10;전) 마스턴투자운용 팀장"&gt;&lt;/textarea&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button type="submit" class="btn"&gt;📄 제안서 생성하기&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/form&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('proposalForm').addEventListener('submit', function(e) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>e.preventDefault();</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const formData = new FormData(e.target);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const data = {};</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>formData.forEach((value, key) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>data[key] = value;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 데이터를 localStorage에 저장</p>
-<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('proposalData', JSON.stringify(data));</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 제안서 페이지로 이동</p>
-<p class="p1"><span class="Apple-converted-space">            </span>window.location.href = 'proposal.html';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+    <div class="container">
+        <h1>📄 CareerHigh 제안서 생성기</h1>
+        
+        <!-- 상단 액션 버튼 -->
+        <div class="top-actions">
+            <button onclick="toggleSavedList()">💾 저장된 제안서 보기</button>
+            <button onclick="document.getElementById('importFile').click()">📁 파일에서 불러오기</button>
+            <button onclick="clearForm()">🗑️ 폼 초기화</button>
+        </div>
+        
+        <!-- 저장된 제안서 목록 -->
+        <div id="savedList" class="saved-list"></div>
+        
+        <!-- 파일 업로드 (숨김) -->
+        <input type="file" id="importFile" class="file-upload" accept=".json" onchange="importProposal(event)">
+        
+        <form id="proposalForm">
+            <!-- 기본 정보 -->
+            <div class="section-title">기본 정보</div>
+            
+            <div class="form-group">
+                <label>파트너사명 *</label>
+                <input type="text" name="partner_name" placeholder="예: 서울대학교" required>
+            </div>
+            
+            <div class="form-group">
+                <label>프로그램명 *</label>
+                <input type="text" name="program_name" placeholder="예: 2025 겨울방학 금융권 프로그램" required>
+            </div>
+            
+            <div class="form-group">
+                <label>날짜 *</label>
+                <input type="text" name="date" placeholder="예: 26년 1월" required>
+            </div>
+
+            <!-- 프로그램 상세 -->
+            <div class="section-title">프로그램 상세</div>
+            
+            <div class="form-group">
+                <label>프로그램 유형</label>
+                <select name="program_type">
+                    <option value="online">온라인</option>
+                    <option value="offline">오프라인</option>
+                    <option value="hybrid">온·오프라인 병행</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>일정</label>
+                <input type="text" name="schedule" placeholder="예: 2026.1.14 ~ 1.21 / 총 3회">
+            </div>
+            
+            <div class="form-group">
+                <label>참여 인원</label>
+                <input type="number" name="participants" placeholder="예: 100">
+            </div>
+            
+            <div class="form-group">
+                <label>강의 시간</label>
+                <input type="text" name="duration" placeholder="예: 매주 월요일 13:00-16:00 (3H)">
+            </div>
+
+            <!-- 프로그램 내용 -->
+            <div class="section-title">프로그램 내용</div>
+            
+            <div class="form-group">
+                <label>프로그램 목표</label>
+                <textarea name="objectives" placeholder="• 첫 번째 목표&#10;• 두 번째 목표"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>커리큘럼 (회차별)</label>
+                <textarea name="curriculum" placeholder="1주차: 내용&#10;2주차: 내용"></textarea>
+            </div>
+
+            <!-- 금액 -->
+            <div class="section-title">금액 정보</div>
+            
+            <div class="form-group">
+                <label>강의료 (원)</label>
+                <input type="number" name="price" placeholder="예: 2000000">
+            </div>
+
+            <!-- 멘토 정보 -->
+            <div class="section-title">멘토 정보</div>
+            
+            <div class="form-group">
+                <label>멘토명</label>
+                <input type="text" name="mentor_name" placeholder="예: 박철오">
+            </div>
+            
+            <div class="form-group">
+                <label>멘토 직책</label>
+                <input type="text" name="mentor_position" placeholder="예: 커리어하이 대표">
+            </div>
+            
+            <div class="form-group">
+                <label>멘토 경력</label>
+                <textarea name="mentor_career" placeholder="현) 크래커박스(주) 대표&#10;전) 마스턴투자운용 팀장"></textarea>
+            </div>
+
+            <button type="submit" class="btn">📄 제안서 생성하기</button>
+        </form>
+    </div>
+
+    <script src="storage.js"></script>
+    <script>
+        // 폼 제출
+        document.getElementById('proposalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {};
+            
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            
+            // 제안서 저장
+            const id = proposalStorage.save(data);
+            
+            // 임시 저장 (제안서 페이지에서 사용)
+            sessionStorage.setItem('currentProposal', JSON.stringify(data));
+            
+            // 제안서 페이지로 이동
+            window.location.href = 'proposal.html';
+        });
+        
+        // 저장된 제안서 목록 토글
+        function toggleSavedList() {
+            const list = document.getElementById('savedList');
+            list.classList.toggle('active');
+            
+            if (list.classList.contains('active')) {
+                loadSavedList();
+            }
+        }
+        
+        // 저장된 제안서 목록 로드
+        function loadSavedList() {
+            const proposals = proposalStorage.getAll();
+            const listEl = document.getElementById('savedList');
+            
+            if (proposals.length === 0) {
+                listEl.innerHTML = '<p style="padding: 20px; text-align: center; color: #666;">저장된 제안서가 없습니다.</p>';
+                return;
+            }
+            
+            listEl.innerHTML = proposals.map(p => `
+                <div class="saved-item">
+                    <div class="saved-info">
+                        <strong>${p.partner_name} - ${p.program_name}</strong>
+                        <small>${new Date(p.savedAt).toLocaleString('ko-KR')}</small>
+                    </div>
+                    <div class="saved-actions">
+                        <button onclick="loadProposal('${p.id}')">불러오기</button>
+                        <button onclick="exportProposal('${p.id}')">내보내기</button>
+                        <button onclick="deleteProposal('${p.id}')">삭제</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 제안서 불러오기
+        function loadProposal(id) {
+            const proposal = proposalStorage.get(id);
+            if (!proposal) return;
+            
+            const form = document.getElementById('proposalForm');
+            Object.keys(proposal).forEach(key => {
+                const input = form.elements[key];
+                if (input) {
+                    input.value = proposal[key];
+                }
+            });
+            
+            document.getElementById('savedList').classList.remove('active');
+            alert('제안서를 불러왔습니다!');
+        }
+        
+        // 제안서 내보내기
+        function exportProposal(id) {
+            proposalStorage.exportToJSON(id);
+        }
+        
+        // 제안서 삭제
+        function deleteProposal(id) {
+            if (confirm('정말 삭제하시겠습니까?')) {
+                proposalStorage.delete(id);
+                loadSavedList();
+            }
+        }
+        
+        // 파일에서 가져오기
+        async function importProposal(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            try {
+                const id = await proposalStorage.importFromJSON(file);
+                alert('제안서를 가져왔습니다!');
+                loadProposal(id);
+            } catch (error) {
+                alert('파일을 불러오는데 실패했습니다: ' + error.message);
+            }
+        }
+        
+        // 폼 초기화
+        function clearForm() {
+            if (confirm('입력한 내용이 모두 삭제됩니다. 계속하시겠습니까?')) {
+                document.getElementById('proposalForm').reset();
+            }
+        }
+    </script>
 </body>
 </html>
